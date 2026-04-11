@@ -23,7 +23,7 @@ export default function SelectPet({ navigation }) {
             style={styles.petCard}
             onPress={() => handleSelect(pet.animal)}
           >
-            <Image source={pet.image} style={styles.petImage} />
+            <Image source={pet.gif} style={styles.petImage} />
             <Text style={styles.petName}>{pet.animal}</Text>
           </TouchableOpacity>
         ))}
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60,
     alignItems: "center",
+    backgroundColor: "#BFDBF7",
   },
   title: {
     fontSize: 22,

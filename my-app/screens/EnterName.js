@@ -27,7 +27,7 @@ export default function EnterName({ navigation }) {
       <Text style={styles.title}>Give your {curPetData.animal} a name:</Text>
 
       <Image
-        source={curPetData.image}
+        source={curPetData.gif}
         style={styles.petImage}
       />
 
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60,
     alignItems: "center",
+    backgroundColor: "#BFDBF7",
   },
   title: {
     fontSize: 22,
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   petImage: {
-    width: 100,
+    width: 200,
     height: 180,
     resizeMode: "contain",
   },
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     borderRadius: 5,
-    borderColor: '#ccc'
+    borderColor: '#ccc',
+    backgroundColor: "white"
   }
 });

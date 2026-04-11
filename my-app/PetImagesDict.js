@@ -1,37 +1,37 @@
 export const pets = [
     {
-        animal: "cat",
+        animal: "Cat",
         image: require("./assets/cat.png"),
         gif: require("./assets/cat.gif"),
     },
     {
-        animal: "dog",
+        animal: "Dog",
         image: require("./assets/dog.png"),
-        gif: require("./assets/cat.gif"),
+        gif: require("./assets/dog.gif"),
     },
     {
-        animal: "cow",
+        animal: "Cow",
         image: require("./assets/cow.png"),
-        gif: require("./assets/cat.gif"),
+        gif: require("./assets/cow.gif"),
     },
     {
-        animal: "fish",
-        image: require("./assets/fish.png"),
-        gif: require("./assets/cat.gif"),
+        animal: "Shark",
+        image: require("./assets/cat.png"),
+        gif: require("./assets/shark.gif"),
     },
     {
-        animal: "panda",
-        image: require("./assets/panda.png"),
-        gif: require("./assets/cat.gif"),
+        animal: "Horse",
+        image: require("./assets/cat.png"),
+        gif: require("./assets/horse.gif"),
     },
     {
-        animal: "bunny",
+        animal: "Bunny",
         image: require("./assets/bunny.png"),
-        gif: require("./assets/cat.gif"),
+        gif: require("./assets/bunny.gif"),
     },
     {
-        animal: "penguin",
+        animal: "Penguin",
         image: require("./assets/penguin.png"),
-        gif: require("./assets/cat.gif"),
+        gif: require("./assets/penguin.gif"),
     },
 ];
