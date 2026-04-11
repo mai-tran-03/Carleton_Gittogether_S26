@@ -1,85 +1,75 @@
+// Feed pet page - See your pet's hunger level and start a timer to feed them
+
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Button, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { usePet } from '../PetContext';
-import { pets } from '../PetImagesDict';
 
 export default function FeedScreen() {
-  const { selectedPet, petName, hunger, setHunger } = usePet();
-  const curPetData = pets.find((pet) => pet.animal === selectedPet);
+  const {
+    petName,
+    hunger,
+    setHunger,
+  } = usePet();
 
-  const [progress, setProgress] = useState(hunger);
+  const curFoods = [
+    { name: "cookie", time: 10 },
+    { name: "strawberry", time: 20 },
+    { name: "pizza", time: 30 },
+    { name: "sushi", time: 60 },
+    { name: "pie", time: 90 },
+  ];
 
-  // const handleSelect = (food) => {
-  //   console.log(
-  //     `Feeding ${petName} some ${food.name} for ${food.time} minutes`
-  //   );
-
-  //   setProgress((prev) => (prev + food.time > 100 ? 100 : prev + food.time));
-  // };
-
-  const [lastFeedTime, setLastFeedTime] = useState(null);
   const [canFeed, setCanFeed] = useState(true);
   const [cooldownSeconds, setCooldownSeconds] = useState(0);
-  
-  // const COOLDOWN_TIME = 30000; 
+  const [activeFood, setActiveFood] = useState(null);
+  const [timer, setTimer] = useState(0);
+  const intervalRef = React.useRef(null);
 
-  // useEffect(() => {
-  //   if (!canFeed && cooldownSeconds > 0) {
-  //     const timer = setTimeout(() => {
-  //       setCooldownSeconds(cooldownSeconds - 1);
-  //     }, 1000);
-  //     return () => clearTimeout(timer);
-  //   } else if (cooldownSeconds === 0 && !canFeed) {
-  //     setCanFeed(true);
-  //   }
-  // }, [cooldownSeconds, canFeed]);
+  useEffect(() => {
+    if (!canFeed && cooldownSeconds > 0) {
+      const timer = setTimeout(() => {
+        setCooldownSeconds(cooldownSeconds - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else if (cooldownSeconds === 0 && !canFeed) {
+      setCanFeed(true);
+    }
+  }, [cooldownSeconds, canFeed]);
 
-  // const handleSelect = (food) => {
-  //   if (!canFeed) return;
+  const startFeedTimer = (food) => {
+    if (intervalRef.current) return;
 
-  //   console.log(
-  //     `Feeding ${petName} some ${food.name} for ${food.time} minutes`
-  //   );
+    setActiveFood(food);
+    setTimer(5); // 5 seconds for demo purposes | food.time * 60 for real time
 
-  //   const newProgress = progress + food.time > 100 ? 100 : progress + food.time;
-  //   setProgress(newProgress);
-  //   setHunger(newProgress); // Update context
-  //   setCanFeed(false);
-  //   setLastFeedTime(Date.now());
-  //   setCooldownSeconds(COOLDOWN_TIME / 1000);
-  // };
+    intervalRef.current = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
 
+          setHunger((prevHunger) => Math.min(100, prevHunger + food.time));
 
-
-  const petFoods = {
-    all: [
-      { name: "tomato", time: 10 },
-      { name: "grapes", time: 20 },
-      { name: "pizza", time: 30 },
-      { name: "sushi", time: 60 },
-      { name: "cake", time: 90 },
-    ],
+          setActiveFood(null);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
   };
-  const curFoods = petFoods.all;
 
   return (
 
     <View style={styles.container}>
 
+      <Text style={styles.title}>Feed {petName}</Text>
+
       <View style={styles.statusContainer}>
-        <Text style={styles.statusLabel}>{petName}'s hunger: {progress}%</Text>
+        <Text style={styles.statusLabel}>{petName}'s hunger: {hunger}%</Text>
         <View style={styles.barBackground}>
-          <View style={[styles.barFilling, { width: `${progress}%` }]} />
+          <View style={[styles.barFilling, { width: `${hunger}%` }]} />
         </View>
       </View>
-
-
-      <Text style={styles.title}>Start a timer to feed {petName}:</Text>
-      {/* {!canFeed && (
-        <Text style={styles.cooldownText}>
-          Wait {cooldownSeconds}s before feeding again
-        </Text>
-      )} */}
 
       <View style={styles.grid}>
         {curFoods.map((food) => (
@@ -89,12 +79,12 @@ export default function FeedScreen() {
             <TouchableOpacity
               style={[
                 styles.foodButton,
-                // !canFeed && styles.foodButtonDisabled,
+                activeFood?.name === food.name && styles.activeFoodButton,
               ]}
-              onPress={() => handleSelect(food)}
+              onPress={() => startFeedTimer(food)}
             >
               <Text style={styles.foodButtonText}>
-                {food.time} minutes
+                {activeFood?.name === food.name ? `${timer}s` : `${food.time} minutes`}
               </Text>
             </TouchableOpacity>
 
@@ -102,26 +92,23 @@ export default function FeedScreen() {
             <View style={styles.foodInfo}>
                <Image
                   source={
-                    food.name === "grapes"
-                      ? require("../assets/grapes.png")
+                    food.name === "strawberry"
+                      ? require("../assets/strawberry.png")
                       : food.name === "sushi"
                       ? require("../assets/sushi.png")
                       : food.name === "pizza"
                       ? require("../assets/pizza.png")
-                      : food.name === "tomato"
-                      ? require("../assets/tomato.png")
-                      : require("../assets/cake.png")
+                      : food.name === "cookie"
+                      ? require("../assets/cookie.png")
+                      : require("../assets/pie.png")
                   }
                   style={styles.foodImage}
                 />
               <Text style={styles.foodLabel}>{food.name}</Text>
             </View>
-            
           </View>
         ))}
       </View>
-
-
     </View>
   );
 }
@@ -137,7 +124,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 40,
+    marginBottom: 20,
   },
 
   statusContainer: {
@@ -149,15 +136,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: "#022B3A"
   },
 
   barBackground: {
     height: 20,
-    width: '100%',
-    backgroundColor: '#e0e0e0',
+    backgroundColor: "white",
     borderRadius: 10,
-    overflow: 'hidden',
+    overflow: "hidden",
+    borderWidth: 2,
+    borderColor: "white",
   },
 
   barFilling: {
@@ -185,7 +174,7 @@ const styles = StyleSheet.create({
 
   foodButton: {
     backgroundColor: "#1F7A8C", 
-    paddingVertical: 15,
+    paddingVertical: 18,
     paddingHorizontal: 20,
     borderRadius: 12,
     width: "80%",
@@ -199,18 +188,25 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
+  // when timer is on
+  activeFoodButton: {
+    borderWidth: 3,
+    borderColor: "#022B3A", 
+  },
+
   row: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "80%",
+    width: "70%",
     marginVertical: 10,
+    marginLeft: -12,
+    gap: 12,
   },
 
   foodInfo: {
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 10,
   },
 
   foodImage: {
@@ -222,7 +218,7 @@ const styles = StyleSheet.create({
   foodLabel: {
     fontSize: 14,
     color: "#022B3A",
-    marginTop: -5,
+    marginTop: -3,
   },
   
   buttonWrapper: {
@@ -231,14 +227,4 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 
-  cooldownText: {
-    fontSize: 14,
-    color: '#d32f2f',
-    marginBottom: 10,
-    fontWeight: '600',
-  },
-  foodButtonDisabled: {
-    opacity: 0.5,
-    backgroundColor: '#999',
-  },
 });

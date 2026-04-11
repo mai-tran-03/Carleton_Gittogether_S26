@@ -10,7 +10,7 @@ export const PetProvider = ({ children }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setHunger((prev) => Math.max(prev - 1, 0));
-    }, 30000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);

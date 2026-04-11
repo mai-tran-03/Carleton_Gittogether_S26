@@ -20,11 +20,6 @@ export const pets = [
         gif: require("./assets/shark.gif"),
     },
     {
-        animal: "Horse",
-        image: require("./assets/cat.png"),
-        gif: require("./assets/horse.gif"),
-    },
-    {
         animal: "Bunny",
         image: require("./assets/bunny.png"),
         gif: require("./assets/bunny.gif"),

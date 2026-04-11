@@ -1,3 +1,5 @@
+// Select pet page - user selects a pet and continues to enter name page
+
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { usePet } from '../PetContext';
 import { pets } from '../PetImagesDict';
@@ -14,7 +16,7 @@ export default function SelectPet({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Select your pet:</Text>
+      <Text style={styles.title}>Select Your Study Buddy</Text>
 
       <View style={styles.grid}>
         {pets.map((pet, index) => (
@@ -55,9 +57,14 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   petImage: {
-    width: 80,
-    height: 80,
+    width: 130,
+    height: 130,
+    padding: 20,
+    borderColor: "white",
+    borderWidth: 2,
     resizeMode: "contain",
+    borderRadius: 70,
+    backgroundColor: "#30638E"
   },
   petName: {
     marginTop: 5,

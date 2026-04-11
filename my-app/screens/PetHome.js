@@ -1,9 +1,12 @@
+// Pet home page - see you pet's hunger level and click to feed them
+
 import {
   View,
   Text,
   Image,
   Button,
   StyleSheet,
+  TouchableOpacity
 } from "react-native";
 
 import { usePet } from "../PetContext";
@@ -19,50 +22,49 @@ export default function EnterName({ navigation }) {
   return (
     <View style={styles.container}>
 
-      
-{hunger >= 90 && (
-  <>
-    <Image
-      source={require("../assets/heart.gif")}
-      style={{
-        width: 35,
-        height: 100,
-        position: "absolute",
-        top: 110,
-        left: 290,
-        resizeMode: "contain",
-        zIndex: 999,
-      }}
-    />
+    {hunger >= 90 && (
+      <>
+      <Image
+        source={require("../assets/heart.gif")}
+        style={{
+          width: 35,
+          height: 100,
+          position: "absolute",
+          top: 110,
+          left: 270,
+          resizeMode: "contain",
+          zIndex: 999,
+        }}
+      />
 
-    <Image
-      source={require("../assets/speech.png")}
-      style={{
-        width: 150,
-        height: 200,
-        position: "absolute",
-        top: 70,
-        left: 278,
-        resizeMode: "contain",
-        zIndex: 998,
-      }}
-    />
-    <Text
-            style={{
-              position: "absolute",
-              top: 145,
-              left: 328,
-              zIndex: 999,
-              fontSize: 20,
-              fontWeight: "bold",
-            }}
-          >
+      <Image
+        source={require("../assets/speech.png")}
+        style={{
+          width: 150,
+          height: 200,
+          position: "absolute",
+          top: 70,
+          left: 258,
+          resizeMode: "contain",
+          zIndex: 998,
+        }}
+      />
+      <Text
+          style={{
+            position: "absolute",
+            top: 145,
+            left: 308,
+            zIndex: 999,
+            fontSize: 20,
+            fontWeight: "bold",
+          }}
+        >
             I love you!
           </Text>
-  </>
-)}
+        </>
+      )}
 
-      {hunger < 20 && (
+      {hunger < 40 && (
         <>
           <Image
             source={require("../assets/speech.png")}
@@ -71,7 +73,7 @@ export default function EnterName({ navigation }) {
               height: 200,
               position: "absolute",
               top: 70,
-              left: 278,
+              left: 258,
               resizeMode: "contain",
               zIndex: 998,
             }}
@@ -84,7 +86,7 @@ export default function EnterName({ navigation }) {
               height: 40,
               position: "absolute",
               top: 138,
-              left: 278,
+              left: 258,
               resizeMode: "contain",
               zIndex: 999,
             }}
@@ -94,7 +96,7 @@ export default function EnterName({ navigation }) {
             style={{
               position: "absolute",
               top: 145,
-              left: 328,
+              left: 308,
               zIndex: 999,
               fontSize: 20,
               fontWeight: "bold",
@@ -114,11 +116,10 @@ export default function EnterName({ navigation }) {
           source={curPetData.gif}
           style={styles.petImage}
         />
-
-       
+      
         <View style={styles.statusContainer}>
           <Text style={styles.statusLabel}>
-            Pet's hunger: {hunger ?? 0}%
+            {petName}'s hunger: {hunger ?? 0}%
           </Text>
 
           <View style={styles.barBackground}>
@@ -137,17 +138,15 @@ export default function EnterName({ navigation }) {
         </View>
       </View>
 
-      <Image
-        source={require("../assets/gen_food.png")}
-        style={styles.foodImage}
-      />
+    
 
-      <View style={styles.foodButton}>
-        <Button
-          title="Feed Pet"
-          onPress={() => navigation.navigate("FeedPet")}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("FeedPet")}
+        style={styles.foodButton}
+      >
+        <Text style={styles.buttonText}>Feed pet</Text>
+      </TouchableOpacity>
+      
     </View>
   );
 }
@@ -161,23 +160,24 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 24,
-    color: "#D1495B",
+    fontSize: 40,
+    color: "#022B3A",
     textAlign: "center",
-    paddingVertical: 20,
-    borderWidth: 2,
-    borderColor: "#E1E5F2",
-    padding: 40,
-    backgroundColor: "#E1E5F2",
-    borderRadius: 20,
+    paddingVertical: 10,
     fontWeight: "bold",
-    
   },
 
   petImage: {
     width: 250,
-    height: 300,
+    height: 250,
+    padding: 20,
     resizeMode: "contain",
+    borderColor: "white",
+    borderWidth: 2,
+    resizeMode: "contain",
+    borderRadius: 200,
+    backgroundColor: "#30638E",
+    marginTop: 20,
   },
 
   statusContainer: {
@@ -190,13 +190,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
     textAlign: "center",
+    color: "#022B3A",
   },
 
   barBackground: {
     height: 20,
-    backgroundColor: "#e0e0e0",
+    backgroundColor: "white",
     borderRadius: 10,
     overflow: "hidden",
+    borderWidth: 2,
+    borderColor: "white",
   },
 
   barFilling: {
@@ -204,18 +207,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#4CAF50",
   },
 
-  foodImage: {
-    height: 80,
-    width: 80,
-    resizeMode: "contain",
-  },
 
   foodButton: {
-    height: 50,
+    height: 60,
     width: 200,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#E1E5F2",
-    borderRadius: 10,
+    borderRadius: 20,
+    borderColor: "white",
+    borderWidth: 2,
+    marginTop: 50,
   },
+
+  buttonText:{
+    fontSize: 22,
+    color: "#022B3A",
+  }
 });

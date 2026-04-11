@@ -7,7 +7,6 @@ import { PetProvider } from "./PetContext";
 import EnterName from "./screens/EnterName";
 import SelectPet from "./screens/SelectPet";
 import PetHome from "./screens/PetHome";
-import PetStore from "./screens/PetStore";
 import FeedPet from "./screens/FeedPet";
 
 const Stack = createNativeStackNavigator();
@@ -41,12 +40,6 @@ export default function App() {
           <Stack.Screen
             name="FeedPet"
             component={FeedPet}
-            options={{ title: '' }}
-          />
-
-          <Stack.Screen
-            name="PetStore"
-            component={PetStore}
             options={{ title: '' }}
           />
 
