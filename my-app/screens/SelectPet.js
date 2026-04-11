@@ -1,12 +1,31 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { Alert, View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { usePet } from '../PetContext';
 import { pets } from '../PetImagesDict';
+import { supabase } from "../lib/supabase.js";
 
 export default function SelectPet({ navigation }) {
   const { setSelectedPet } = usePet();
 
-  const handleSelect = (pet) => {
-    setSelectedPet(pet);
+  const savePetSelection = async (pet) => {
+    const { error } = await supabase.from("pet_selections").insert({
+      user_id: "user_123",
+      pet_id: pet.id,
+      animal: pet.animal,
+    });
+
+    if (error) {
+      console.error("Error saving pet:", error);
+      Alert.alert("Error", "Could not save pet selection.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSelect = async (pet) => {
+    const saved = await savePetSelection(pet);
+    if (!saved) return;
+
+    setSelectedPet(pet.animal);
     navigation.navigate("EnterName", {
       pet: pet.animal,
     });
@@ -21,7 +40,7 @@ export default function SelectPet({ navigation }) {
           <TouchableOpacity
             key={index}
             style={styles.petCard}
-            onPress={() => handleSelect(pet.animal)}
+            onPress={() => handleSelect(pet)}
           >
             <Image source={pet.image} style={styles.petImage} />
             <Text style={styles.petName}>{pet.animal}</Text>
