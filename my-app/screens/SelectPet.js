@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { usePet } from '../PetContext';
 import { pets } from '../PetImagesDict';
@@ -49,7 +48,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
   },
-
   petCard: {
     width: "45%",
     alignItems: "center",

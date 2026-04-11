@@ -8,7 +8,7 @@ import { pets } from '../PetImagesDict';
 export default function EnterName({ navigation }) {
   const [name, setName] = useState("");
 
-  const { selectedPet } = usePet();
+  const { selectedPet, setPetName } = usePet();
   const curPetData = pets.find((pet) => pet.animal === selectedPet);
 
   const handleNext = () => {
@@ -16,10 +16,8 @@ export default function EnterName({ navigation }) {
       alert("Please give your pet a name!");
       return;
     }
-
-    navigation.navigate("PetHome", {
-      petName: name,
-    });
+    setPetName(name);
+    navigation.navigate("PetHome");
   };
 
   if (!curPetData) return <Text>Loading...</Text>;
