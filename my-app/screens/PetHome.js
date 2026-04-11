@@ -8,7 +8,7 @@ export default function EnterName({ navigation }) {
   const { selectedPet, petName } = usePet();
   const curPetData = pets.find((pet) => pet.animal === selectedPet);
 
-  const progress = 60; // static value (food bar does nothing)
+  const { hunger } = usePet();
 
   return (
     <View style={styles.container}>
@@ -23,12 +23,12 @@ export default function EnterName({ navigation }) {
         {/* Food bar (visual only, no interaction/state) */}
         <View style={styles.statusContainer}>
           <Text style={styles.statusLabel}>
-            Pet's hunger: {progress}%
+            Pet's hunger: {hunger}%
           </Text>
 
           <View style={styles.barBackground}>
             <View
-              style={[styles.barFilling, { width: `${progress}%` }]}
+              style={[styles.barFilling, { width: `${hunger}%` }]}
             />
           </View>
         </View>
