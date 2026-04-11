@@ -54,7 +54,7 @@ export default function EnterName({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "lightblue",
+    backgroundColor: "#BFDBF7",
     paddingTop: 60,
     alignItems: "center",
   },
@@ -63,6 +63,11 @@ const styles = StyleSheet.create({
     color: "blue",
     textAlign: "center",
     paddingVertical: 20,
+    borderWidth: 2,
+    borderColor: "#E1E5F2",
+    padding: 40,
+    backgroundColor: "#E1E5F2",
+    borderRadius: 20,
   },
   petImage: {
     width: 250,
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   statusContainer: {
-    width: "90%",
+    width: "100%",
     marginVertical: 20,
   },
   statusLabel: {
