@@ -1,20 +1,54 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import EnterName from "./screens/EnterName";
+import SelectPet from "./screens/SelectPet";
+import PetHome from "./screens/PetHome";
+import PetStore from "./screens/PetStore";
+import FeedPet from "./screens/FeedPet";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator 
+        initialRouteName="SelectPet"
+      >
+
+        <Stack.Screen
+          name="SelectPet"
+          component={SelectPet}
+          options={{ title: '' }}
+        />
+
+        <Stack.Screen
+          name="EnterName"
+          component={EnterName}
+          options={{ title: '' }}
+        />
+
+        <Stack.Screen
+          name="PetHome"
+          component={PetHome}
+          options={{ title: '' }}
+        />
+
+        <Stack.Screen
+          name="FeedPet"
+          component={FeedPet}
+          options={{ title: '' }}
+        />
+
+        <Stack.Screen
+          name="PetStore"
+          component={PetStore}
+          options={{ title: '' }}
+        />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
