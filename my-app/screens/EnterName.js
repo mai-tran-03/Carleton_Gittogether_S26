@@ -6,9 +6,8 @@ import { usePet } from '../PetContext';
 import { pets } from '../PetImagesDict';
 
 export default function EnterName({ navigation }) {
-  const [name, setName] = useState("");
-
-  const { selectedPet, setPetName } = usePet();
+  const { selectedPet, setPetName, petName } = usePet();
+  const [name, setName] = useState(petName || "");
   const curPetData = pets.find((pet) => pet.animal === selectedPet);
 
   const handleNext = () => {
