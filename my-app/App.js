@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { PetProvider } from "./PetContext";
 
 import EnterName from "./screens/EnterName";
 import SelectPet from "./screens/SelectPet";
@@ -13,42 +14,44 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName="SelectPet"
-      >
+    <PetProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="SelectPet"
+        >
 
-        <Stack.Screen
-          name="SelectPet"
-          component={SelectPet}
-          options={{ title: '' }}
-        />
+          <Stack.Screen
+            name="SelectPet"
+            component={SelectPet}
+            options={{ title: '' }}
+          />
 
-        <Stack.Screen
-          name="EnterName"
-          component={EnterName}
-          options={{ title: '' }}
-        />
+          <Stack.Screen
+            name="EnterName"
+            component={EnterName}
+            options={{ title: '' }}
+          />
 
-        <Stack.Screen
-          name="PetHome"
-          component={PetHome}
-          options={{ title: '' }}
-        />
+          <Stack.Screen
+            name="PetHome"
+            component={PetHome}
+            options={{ title: '' }}
+          />
 
-        <Stack.Screen
-          name="FeedPet"
-          component={FeedPet}
-          options={{ title: '' }}
-        />
+          <Stack.Screen
+            name="FeedPet"
+            component={FeedPet}
+            options={{ title: '' }}
+          />
 
-        <Stack.Screen
-          name="PetStore"
-          component={PetStore}
-          options={{ title: '' }}
-        />
+          <Stack.Screen
+            name="PetStore"
+            component={PetStore}
+            options={{ title: '' }}
+          />
 
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PetProvider>
   );
 }

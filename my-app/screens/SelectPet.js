@@ -1,22 +1,17 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-
-const pets = [
-  { name: "Dog", image: require("../assets/dog.png") },
-  { name: "Cat", image: require("../assets/cat.png") },
-  { name: "Cow", image: require("../assets/cow.png") },
-  { name: "Fish", image: require("../assets/fish.png") },
-  { name: "Panda", image: require("../assets/panda.png") },
-  { name: "Bunny", image: require("../assets/bunny.png") },
-  { name: "Penguin", image: require("../assets/penguin.png") },
-];
+import { usePet } from '../PetContext';
+import { pets } from '../PetImagesDict';
 
 export default function SelectPet({ navigation }) {
+  const { setSelectedPet } = usePet();
+
   const handleSelect = (pet) => {
-  navigation.navigate("EnterName", {
-    pet: pet.name,
-  });
-};
+    setSelectedPet(pet);
+    navigation.navigate("EnterName", {
+      pet: pet.animal,
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -27,10 +22,10 @@ export default function SelectPet({ navigation }) {
           <TouchableOpacity
             key={index}
             style={styles.petCard}
-            onPress={() => handleSelect(pet.name)}
+            onPress={() => handleSelect(pet.animal)}
           >
             <Image source={pet.image} style={styles.petImage} />
-            <Text style={styles.petName}>{pet.name}</Text>
+            <Text style={styles.petName}>{pet.animal}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -60,13 +55,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 15,
   },
-
   petImage: {
     width: 80,
     height: 80,
     resizeMode: "contain",
   },
-
   petName: {
     marginTop: 5,
     fontSize: 14,

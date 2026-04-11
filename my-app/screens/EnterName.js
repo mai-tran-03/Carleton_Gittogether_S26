@@ -1,52 +1,48 @@
-import { View, Text, TextInput, Button, Image, StyleSheet } from "react-native";
+import {
+  View, Text, TextInput, Button, Image, StyleSheet
+} from "react-native";
 import { useState } from "react";
+import { usePet } from '../PetContext';
+import { pets } from '../PetImagesDict';
 
-export default function EnterName({ navigation, route }) {
+export default function EnterName({ navigation }) {
   const [name, setName] = useState("");
 
-  const { pet } = route.params || {};
+  const { selectedPet } = usePet();
+  const curPetData = pets.find((pet) => pet.animal === selectedPet);
 
-  const petImages = {
-    Dog: require("../assets/dog.png"),
-    Cat: require("../assets/cat.png"),
-    Cow: require("../assets/cow.png"),
-    Fish: require("../assets/fish.png"),
-    Panda: require("../assets/panda.png"),
-    Bunny: require("../assets/bunny.png"),
-    Penguin: require("../assets/penguin.png"),
-    };
+  const handleNext = () => {
+    if (name.trim() === "") {
+      alert("Please give your pet a name!");
+      return;
+    }
+
+    navigation.navigate("PetHome", {
+      petName: name,
+    });
+  };
+
+  if (!curPetData) return <Text>Loading...</Text>;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        Give your {pet} a name:
-      </Text>
+      <Text style={styles.title}>Give your {curPetData.animal} a name:</Text>
 
       <Image
-        source={petImages[pet]}
-        style={{ width: 150, height: 150, marginBottom: 20 }}
+        source={curPetData.image}
+        style={styles.petImage}
       />
 
       <TextInput
-        placeholder="Enter your pet's name"
+        placeholder="Your pet's name"
         value={name}
         onChangeText={setName}
-        style={{
-          borderWidth: 1,
-          padding: 10,
-          marginBottom: 20,
-          borderRadius: 5,
-        }}
+        style={styles.input}
       />
 
       <Button
         title="Next"
-        onPress={() =>
-          navigation.navigate("PetHome", {
-            pet,
-            name
-          })
-        }
+        onPress={handleNext}
       />
     </View>
   );
@@ -63,4 +59,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 40,
   },
+  petImage: {
+    width: 100,
+    height: 180,
+    resizeMode: "contain",
+  },
+  input: {
+    width: '80%',
+    borderWidth: 1,
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 20,
+    borderRadius: 5,
+    borderColor: '#ccc'
+  }
 });
