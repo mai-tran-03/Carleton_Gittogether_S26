@@ -1,6 +1,6 @@
 # How to run
-- download the Epxo Go app
-- clone the repo
+- download the Expo Go app
+- clone the repo, and run:
    - npm install
    - npx expo start
 
